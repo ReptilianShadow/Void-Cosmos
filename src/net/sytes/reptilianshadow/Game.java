@@ -189,11 +189,11 @@ public class Game {
 		
 		allBodies.add(new Body(100, new Point3D(-3, 0, 0), new Point3D(0, 0.2f, 0), new Rotation(0, 0, 0)));
 		
-		allBodies.add(new Body(100, new Point3D(3, 0, 0), new Point3D(0, -0.2f, 0), new Rotation(0, 0, 0)));
+		allBodies.add(new Body(100, new Point3D(3, 0, 0), new Point3D(0, -0.2f, -0.2f), new Rotation(0, 0, 0)));
 		
 		allBodies.add(new Body(100, new Point3D(0, 3, 0), new Point3D(0.2f, 0, 0), new Rotation(0, 0, 0)));
 		
-		allBodies.add(new Body(100, new Point3D(0, -3, 0), new Point3D(-0.2f, 0, 0), new Rotation(0, 0, 0)));
+		allBodies.add(new Body(100, new Point3D(0, -3, 0), new Point3D(-0.2f, 0, 0.2f), new Rotation(0, 0, 0)));
 		
 		while(!Display.isCloseRequested()){
 			doSimCalculations();
@@ -216,11 +216,11 @@ public class Game {
 
 		Body.genNewAccelerations(allBodies);
 
-		for (int i = 0; i < allBodies.size(); i++){
-			allBodies.get(i).update();
-		}
-
+		Body.updateBodies(allBodies);
 		
+		
+
+		Body.doCollisionMethod();
 
 	}
 
@@ -238,7 +238,7 @@ public class Game {
 		
 		
 		//draw platform cylinder
-		glColor3f(0.5f, 0.2f, 0.8f);
+		glColor3f(0.0f, 1.0f, 1.0f);
 		glPushMatrix();
 		glTranslatef(0, -1f, 0);
 		glRotated(90, 1, 0, 0);
@@ -272,6 +272,9 @@ public class Game {
 				Mouse.setGrabbed(!Mouse.isGrabbed());
 			}
 		}
+		
+		
+		
 
 	}
 
