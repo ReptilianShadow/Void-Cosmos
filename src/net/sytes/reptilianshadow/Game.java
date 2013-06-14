@@ -186,13 +186,16 @@ public class Game {
 
 		Mouse.setGrabbed(true);
 		
-		allBodies.add(new Body(0.001, new Point3D(0, 1, 0), new Point3D(0, 0, 0), new Rotation(0, 0, 0)));
 		
-		allBodies.add(new Body(0.001, new Point3D(-5, 0, 0), new Point3D(0, 0, 0), new Rotation(0, 0, 0)));
+		allBodies.add(new Body(100, new Point3D(-3, 0, 0), new Point3D(0, 0.2f, 0), new Rotation(0, 0, 0)));
 		
+		allBodies.add(new Body(100, new Point3D(3, 0, 0), new Point3D(0, -0.2f, 0), new Rotation(0, 0, 0)));
+		
+		allBodies.add(new Body(100, new Point3D(0, 3, 0), new Point3D(0.2f, 0, 0), new Rotation(0, 0, 0)));
+		
+		allBodies.add(new Body(100, new Point3D(0, -3, 0), new Point3D(-0.2f, 0, 0), new Rotation(0, 0, 0)));
 		
 		while(!Display.isCloseRequested()){
-
 			doSimCalculations();
 			render();
 			handleInput();

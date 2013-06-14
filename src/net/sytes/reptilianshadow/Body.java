@@ -26,6 +26,7 @@ public class Body{
 	}
 
 	public Body(double mass, Point3D position, Point3D velocity, Rotation rotation){
+		this.mass = mass;
 		this.setPosition(position);
 		this.setVelocity(velocity);
 		this.setRotation(rotation);
@@ -70,6 +71,8 @@ public class Body{
 							) / Math.pow(distTotal, 2)
 							);
 					
+					System.out.println(bodiesInSystem.get(first).mass);
+					
 					//necessary temp variables used in first/second body accel calcs
 					float tempAccelTotal, tempAccelX, tempAccelY, tempAccelZ;
 					double tempDistX, tempDistY, tempDistZ;
@@ -78,15 +81,19 @@ public class Body{
 					
 					tempDistX = bodiesInSystem.get(first).position.x - bodiesInSystem.get(second).position.x;
 					tempAccelX = (float) ((tempDistX / distTotal) * tempAccelTotal);
+					tempAccelX *= -1;
 					
 					tempDistY = bodiesInSystem.get(first).position.y - bodiesInSystem.get(second).position.y;
 					tempAccelY = (float) ((tempDistY / distTotal) * tempAccelTotal);
+					tempAccelY *= -1;
 					
 					tempDistZ = bodiesInSystem.get(first).position.z - bodiesInSystem.get(second).position.z;
 					tempAccelZ = (float) ((tempDistZ / distTotal) * tempAccelTotal);
+					tempAccelZ *= -1;
 					
 					//ACCELERATIONS CALCULATIONS SHOULD ACCUMULATE
-					bodiesInSystem.get(first).setAcceleration(new Point3D(tempAccelX, tempAccelY, tempAccelZ));
+					bodiesInSystem.get(first).setAcceleration(bodiesInSystem.get(first).acceleration.add(new Point3D(tempAccelX, tempAccelY, tempAccelZ)));
+					
 					
 					//do stuff for second body (should decrease calculations due to less looping)
 					//and less mass with force calculations I think
@@ -94,16 +101,18 @@ public class Body{
 					
 					tempDistX = bodiesInSystem.get(second).position.x - bodiesInSystem.get(first).position.x;
 					tempAccelX = (float) ((tempDistX / distTotal) * tempAccelTotal);
+					tempAccelX *= -1;
 					
 					tempDistY = bodiesInSystem.get(second).position.y - bodiesInSystem.get(first).position.y;
 					tempAccelY = (float) ((tempDistY / distTotal) * tempAccelTotal);
+					tempAccelY *= -1;
 					
 					tempDistZ = bodiesInSystem.get(second).position.z - bodiesInSystem.get(first).position.z;
 					tempAccelZ = (float) ((tempDistZ / distTotal) * tempAccelTotal);
+					tempAccelZ *= -1;
 					
 					//ACCELERATIONS CALCULATIONS SHOULD ACCUMULATE
-					bodiesInSystem.get(second).setAcceleration(new Point3D(tempAccelX, tempAccelY, tempAccelZ));	
-					
+					bodiesInSystem.get(second).setAcceleration(bodiesInSystem.get(second).acceleration.add(new Point3D(tempAccelX, tempAccelY, tempAccelZ)));	
 					
 				}
 			}
