@@ -15,14 +15,25 @@ import org.lwjgl.util.glu.Sphere;
 
 
 public class Body{
-
+	
+	/*
+	 * All masses are measured in solar masses
+	 * 
+	 * All distances are measured in astronomical units (au)
+	 * 
+	 * 
+	 */
+	
+	
 	private Point3D position, velocity, acceleration;
 	private Rotation rotation;
 
-	private double mass; 
-
+	private double mass; //measured in solar masses
+	
+	private float radius; 
+	
 	public Body(){
-		this(10, new Point3D(0, 0, 0), new Point3D(0, 0, 0), new Rotation(0, 0, 0));	
+		this(1, new Point3D(0, 0, 0), new Point3D(0, 0, 0), new Rotation(0, 0, 0));	
 	}
 
 	public Body(double mass, Point3D position, Point3D velocity, Rotation rotation){
@@ -30,6 +41,8 @@ public class Body{
 		this.setPosition(position);
 		this.setVelocity(velocity);
 		this.setRotation(rotation);
+		
+		radius = 1.0f;
 	}
 
 	public void update(){
@@ -170,7 +183,7 @@ public class Body{
 
 		Sphere patCyl = new Sphere();
 		patCyl.setDrawStyle(GLU.GLU_LINE);
-		patCyl.draw(0.5f, 10, 10); //basically sets the radius, and number of rows/columns of
+		patCyl.draw(radius, 10, 10); //basically sets the radius, and number of rows/columns of
 		//vertices that make up the circle
 		glPopMatrix(); //remove any translations made
 

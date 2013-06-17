@@ -14,7 +14,7 @@ public class Camera {
 
 	private boolean movable = true;
 	
-	private float speed = 0.1f;
+	private float speed;
 
 	private float yFOV;
 	private float aspectRatio;
@@ -31,16 +31,17 @@ public class Camera {
 	 * @param zNear The distance from the viewer to the near clipping plane (always positive). (copied from OpenGL docs)
 	 * @param zFar The distance from the viewer to the far clipping plane (always positive). (copied from OpenGL docs)
 	 */
-	public Camera(Point3D position, Rotation rotation, float yFOV, float aspRatio, float zNear, float zFar){
+	public Camera(float speed, Point3D position, Rotation rotation, float yFOV, float aspRatio, float zNear, float zFar){
 
-		this.position = new Point3D(position.x, position.y, position.z);
-
-		this.rotation = new Rotation(rotation.pitch, rotation.yaw, rotation.roll);
-
-		this.yFOV = yFOV;
-		this.aspectRatio = aspRatio;
-		this.zNear = zNear;
-		this.zFar = zFar;
+		setSpeed(speed);
+		
+		setPositon(position);
+		setRotation(rotation);
+		
+		setyFOV(yFOV);
+		setAspectRatio(aspRatio);
+		setzNear(zNear);
+		setzFar(zFar);
 	}
 
 	/**

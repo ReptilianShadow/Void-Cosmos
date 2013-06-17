@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import net.sytes.reptilianshadow.BodyType.Star;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -40,6 +42,8 @@ public class Game {
 	private boolean startFullScreen;
 
 	private Dimension displaySize;
+	
+	private float camSpeed;
 
 	//=============================
 	//==        My Values        ==
@@ -120,6 +124,8 @@ public class Game {
 
 			zFar = Float.parseFloat(configHashMap.get("zFar"));
 
+			camSpeed = Float.parseFloat(configHashMap.get("camSpeed"));
+			
 
 		}catch(Exception e){
 			System.err.println("Your configuration file is faulty in some way!");
@@ -142,7 +148,9 @@ public class Game {
 
 
 			Display.setVSyncEnabled(true);
-
+			
+			Display.setLocation(1400, 0);
+			
 			Display.setTitle("Void Cosmos " + "v" + version);
 			Display.create();
 
@@ -158,7 +166,7 @@ public class Game {
 
 	private void initGL(){
 
-		camera = new Camera(new Point3D(0, 0, -10), new Rotation(0, 0, 0), 90, Display.getWidth()/Display.getHeight(), zNear, zFar);
+		camera = new Camera(camSpeed, new Point3D(0, 0, -50), new Rotation(0, 0, 0), 90, 1, zNear, zFar);
 
 		//TODO set custom background color?
 		glClearColor(0.0f, 0.0f, 0.0f, 1);
@@ -186,20 +194,18 @@ public class Game {
 
 		Mouse.setGrabbed(true);
 		
+		System.out.println(gConstant);
 		
-		allBodies.add(new Body(100, new Point3D(-3, 0, 0), new Point3D(0, 0.2f, 0), new Rotation(0, 0, 0)));
+		//sun
+		allBodies.add(new Body(0.0001, new Point3D(0.0f, 0.0f, 0.0f), new Point3D(0.0f, 0.0f, 0.0f), new Rotation(0, 0, 0)));
 		
-		allBodies.add(new Body(100, new Point3D(3, 0, 0), new Point3D(0, -0.2f, -0.2f), new Rotation(0, 0, 0)));
+		allBodies.add(new Body(0.0001, new Point3D(100.0f, 0.0f, 0.0f), new Point3D(0.0f, 0.0f, 0.0f), new Rotation(0, 0, 0)));
 		
-		allBodies.add(new Body(100, new Point3D(0, 3, 0), new Point3D(0.2f, 0, 0), new Rotation(0, 0, 0)));
-		
-		allBodies.add(new Body(100, new Point3D(0, -3, 0), new Point3D(-0.2f, 0, 0.2f), new Rotation(0, 0, 0)));
 		
 		while(!Display.isCloseRequested()){
 			doSimCalculations();
 			render();
 			handleInput();
-
 
 			Display.update();
 			Display.sync(60);
